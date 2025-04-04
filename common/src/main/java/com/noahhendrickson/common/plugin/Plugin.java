@@ -1,6 +1,5 @@
 package com.noahhendrickson.common.plugin;
 
-import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 
 import java.util.List;

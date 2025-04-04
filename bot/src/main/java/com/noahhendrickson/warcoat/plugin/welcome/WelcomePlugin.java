@@ -4,7 +4,6 @@ import com.noahhendrickson.common.plugin.EventListener;
 import com.noahhendrickson.common.plugin.ICommand;
 import com.noahhendrickson.common.plugin.Plugin;
 import com.noahhendrickson.warcoat.service.welcome.WelcomeService;
-import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;

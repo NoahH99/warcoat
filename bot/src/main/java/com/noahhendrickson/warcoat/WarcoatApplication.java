@@ -6,8 +6,8 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = {
-    "com.noahhendrickson.warcoat",
-    "com.noahhendrickson.common"
+        "com.noahhendrickson.warcoat",
+        "com.noahhendrickson.common"
 })
 public class WarcoatApplication {
 

@@ -1,7 +1,7 @@
 package com.noahhendrickson.warcoat.service;
 
-import com.noahhendrickson.warcoat.entity.plugin.PluginCommand;
 import com.noahhendrickson.common.plugin.*;
+import com.noahhendrickson.warcoat.entity.plugin.PluginCommand;
 import com.noahhendrickson.warcoat.repository.plugin.PluginCommandRepository;
 import lombok.RequiredArgsConstructor;
 import net.dv8tion.jda.api.JDA;

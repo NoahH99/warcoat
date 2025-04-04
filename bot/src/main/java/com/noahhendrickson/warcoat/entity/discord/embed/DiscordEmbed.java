@@ -35,6 +35,91 @@ public class DiscordEmbed implements JdaConvertible<MessageEmbed> {
     private EmbedAuthor author;
     private List<EmbedField> fields;
 
+    /**
+     * Create a DiscordEmbed from a JDA MessageEmbed
+     *
+     * @param messageEmbed The JDA MessageEmbed to convert
+     * @return A new DiscordEmbed instance
+     */
+    public static DiscordEmbed fromJdaEmbed(MessageEmbed messageEmbed) {
+        if (messageEmbed == null) return null;
+
+        // Convert fields
+        List<EmbedField> embedFields = null;
+
+        if (!messageEmbed.getFields().isEmpty()) {
+            embedFields = new ArrayList<>();
+
+            for (MessageEmbed.Field field : messageEmbed.getFields()) {
+                embedFields.add(EmbedField.builder()
+                        .name(field.getName())
+                        .value(field.getValue())
+                        .inline(field.isInline())
+                        .build());
+            }
+        }
+
+        // Convert footer
+        EmbedFooter footer = null;
+        if (messageEmbed.getFooter() != null) {
+            footer = EmbedFooter.builder()
+                    .text(messageEmbed.getFooter().getText())
+                    .iconUrl(messageEmbed.getFooter().getIconUrl())
+                    .build();
+        }
+
+        // Convert thumbnail
+        EmbedImage thumbnail = null;
+        if (messageEmbed.getThumbnail() != null) {
+            thumbnail = EmbedImage.builder()
+                    .url(messageEmbed.getThumbnail().getUrl())
+                    .height(messageEmbed.getThumbnail().getHeight())
+                    .width(messageEmbed.getThumbnail().getWidth())
+                    .build();
+        }
+
+        // Convert image
+        EmbedImage image = null;
+        if (messageEmbed.getImage() != null) {
+            image = EmbedImage.builder()
+                    .url(messageEmbed.getImage().getUrl())
+                    .height(messageEmbed.getImage().getHeight())
+                    .width(messageEmbed.getImage().getWidth())
+                    .build();
+        }
+
+        // Convert author
+        EmbedAuthor author = null;
+        if (messageEmbed.getAuthor() != null) {
+            author = EmbedAuthor.builder()
+                    .name(messageEmbed.getAuthor().getName())
+                    .url(messageEmbed.getAuthor().getUrl())
+                    .iconUrl(messageEmbed.getAuthor().getIconUrl())
+                    .build();
+        }
+
+        // Convert timestamp
+        LocalDateTime timestamp = null;
+        if (messageEmbed.getTimestamp() != null) timestamp = messageEmbed.getTimestamp().toLocalDateTime();
+
+        // Convert color
+        Integer color = null;
+        if (messageEmbed.getColor() != null) color = messageEmbed.getColor().getRGB();
+
+        return DiscordEmbed.builder()
+                .title(messageEmbed.getTitle())
+                .description(messageEmbed.getDescription())
+                .url(messageEmbed.getUrl())
+                .color(color)
+                .timestamp(timestamp)
+                .footer(footer)
+                .thumbnail(thumbnail)
+                .image(image)
+                .author(author)
+                .fields(embedFields)
+                .build();
+    }
+
     @Override
     public MessageEmbed toJdaEntity() {
         return buildEmbed(null, null);
@@ -134,91 +219,6 @@ public class DiscordEmbed implements JdaConvertible<MessageEmbed> {
         }
 
         return builder.build();
-    }
-
-    /**
-     * Create a DiscordEmbed from a JDA MessageEmbed
-     *
-     * @param messageEmbed The JDA MessageEmbed to convert
-     * @return A new DiscordEmbed instance
-     */
-    public static DiscordEmbed fromJdaEmbed(MessageEmbed messageEmbed) {
-        if (messageEmbed == null) return null;
-
-        // Convert fields
-        List<EmbedField> embedFields = null;
-
-        if (!messageEmbed.getFields().isEmpty()) {
-            embedFields = new ArrayList<>();
-
-            for (MessageEmbed.Field field : messageEmbed.getFields()) {
-                embedFields.add(EmbedField.builder()
-                        .name(field.getName())
-                        .value(field.getValue())
-                        .inline(field.isInline())
-                        .build());
-            }
-        }
-
-        // Convert footer
-        EmbedFooter footer = null;
-        if (messageEmbed.getFooter() != null) {
-            footer = EmbedFooter.builder()
-                    .text(messageEmbed.getFooter().getText())
-                    .iconUrl(messageEmbed.getFooter().getIconUrl())
-                    .build();
-        }
-
-        // Convert thumbnail
-        EmbedImage thumbnail = null;
-        if (messageEmbed.getThumbnail() != null) {
-            thumbnail = EmbedImage.builder()
-                    .url(messageEmbed.getThumbnail().getUrl())
-                    .height(messageEmbed.getThumbnail().getHeight())
-                    .width(messageEmbed.getThumbnail().getWidth())
-                    .build();
-        }
-
-        // Convert image
-        EmbedImage image = null;
-        if (messageEmbed.getImage() != null) {
-            image = EmbedImage.builder()
-                    .url(messageEmbed.getImage().getUrl())
-                    .height(messageEmbed.getImage().getHeight())
-                    .width(messageEmbed.getImage().getWidth())
-                    .build();
-        }
-
-        // Convert author
-        EmbedAuthor author = null;
-        if (messageEmbed.getAuthor() != null) {
-            author = EmbedAuthor.builder()
-                    .name(messageEmbed.getAuthor().getName())
-                    .url(messageEmbed.getAuthor().getUrl())
-                    .iconUrl(messageEmbed.getAuthor().getIconUrl())
-                    .build();
-        }
-
-        // Convert timestamp
-        LocalDateTime timestamp = null;
-        if (messageEmbed.getTimestamp() != null) timestamp = messageEmbed.getTimestamp().toLocalDateTime();
-
-        // Convert color
-        Integer color = null;
-        if (messageEmbed.getColor() != null) color = messageEmbed.getColor().getRGB();
-
-        return DiscordEmbed.builder()
-                .title(messageEmbed.getTitle())
-                .description(messageEmbed.getDescription())
-                .url(messageEmbed.getUrl())
-                .color(color)
-                .timestamp(timestamp)
-                .footer(footer)
-                .thumbnail(thumbnail)
-                .image(image)
-                .author(author)
-                .fields(embedFields)
-                .build();
     }
 
     @Data

@@ -20,7 +20,7 @@ public class ActivityParser {
 
     /**
      * Parse activity string into JDA Activity object.
-     * 
+     *
      * @param activityStr Format: TYPE:message
      * @return Activity object or default PLAYING activity if parsing fails
      */
@@ -29,12 +29,12 @@ public class ActivityParser {
             LOGGER.warn("Activity string is null or empty");
             return null;
         }
-        
+
         try {
             String[] parts = activityStr.split(":", 3);
-            
+
             ActivityType type = parseActivityType(parts[0]);
-            
+
             if (type == ActivityType.STREAMING && parts.length == 3) {
                 // STREAMING format: STREAMING:url:message
                 return Activity.streaming(parts[2], parts[1]);
@@ -49,7 +49,7 @@ public class ActivityParser {
             return Activity.customStatus(activityStr);
         }
     }
-    
+
     private ActivityType parseActivityType(String typeStr) {
         try {
             return ActivityType.valueOf(typeStr.toUpperCase());
@@ -58,7 +58,7 @@ public class ActivityParser {
             return ActivityType.CUSTOM;
         }
     }
-    
+
     private Activity createActivity(ActivityType type, String message) {
         return switch (type) {
             case PLAYING -> Activity.playing(message);
@@ -69,7 +69,7 @@ public class ActivityParser {
             case CUSTOM -> Activity.customStatus(message);
         };
     }
-    
+
     public enum ActivityType {
         PLAYING,
         WATCHING,
